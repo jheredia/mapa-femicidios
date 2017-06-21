@@ -1,3 +1,22 @@
-<p>
-  femicide-list works!
-</p>
+<div class="row">
+  <div class="col-md-5">
+    <h2>Femicidios</h2>
+    <ul class="list-group">
+      <li class="list-group-item"
+        *ngFor="let femicide of femicides"
+        (click)="selectFemicide(femicide)"
+        [class.active]="femicide === selectedFemicide">
+        {{femicide.name}}
+      </li>
+    </ul>
+    <button class="btn btn-warning" (click)="createNewFemicide()">New</button>
+  </div>
+  <div class="col-md-5 col-md-offset-2">
+    <femicide-details
+      [femicide]="selectedContact"
+      [createHandler]="addContact"
+      [updateHandler]="updateContact"
+      [deleteHandler]="deleteContact">
+    </femicide-details>
+  </div>
+</div>

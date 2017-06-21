@@ -1,5 +1,5 @@
 export class Femicide {
-	__id?: string;
+	_id?: string;
 	name: string;
 	age: string;
 	description: string;
