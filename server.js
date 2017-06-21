@@ -60,7 +60,7 @@ app.post("/api/femicides", function(req, res) {
     handleError(res, "Invalid user input", "Must provide a name.", 400);
   }
 
-  db.collection(CONTACTS_COLLECTION).insertOne(newFemicide, function(err, doc) {
+  db.collection(FEMICIDES_COLLECTION).insertOne(newFemicide, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new femicide.");
     } else {
