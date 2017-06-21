@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
-var CONTACTS_COLLECTION = "contacts";
+var FEMICIDES_COLLECTION = "femicides";
 
 var app = express();
 app.use(bodyParser.json());
@@ -29,7 +29,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   });
 });
 
-// CONTACTS API ROUTES BELOW
+// FEMICIDES API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
@@ -37,55 +37,55 @@ function handleError(res, reason, message, code) {
   res.status(code || 500).json({"error": message});
 }
 
-/*  "/api/contacts"
- *    GET: finds all contacts
- *    POST: creates a new contact
+/*  "/api/femicides"
+ *    GET: returns all femicides
+ *    POST: add a new femicide
  */
 
-app.get("/api/contacts", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+app.get("/api/femicides", function(req, res) {
+  db.collection(FEMICIDES_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
+      handleError(res, err.message, "Failed to get femicides.");
     } else {
       res.status(200).json(docs);
     }
   });
 });
 
-app.post("/api/contacts", function(req, res) {
-  var newContact = req.body;
-  newContact.createDate = new Date();
+app.post("/api/femicides", function(req, res) {
+  var newFemicide = req.body;
+  newFemicide.creationDate = new Date();
 
   if (!req.body.name) {
     handleError(res, "Invalid user input", "Must provide a name.", 400);
   }
 
-  db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
+  db.collection(CONTACTS_COLLECTION).insertOne(newFemicide, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to create new contact.");
+      handleError(res, err.message, "Failed to create new femicide.");
     } else {
       res.status(201).json(doc.ops[0]);
     }
   });
 });
 
-/*  "/api/contacts/:id"
- *    GET: find contact by id
+/*  "/api/femicides/:id"
+ *    GET: find femicide by id
  *    PUT: update contact by id
  *    DELETE: deletes contact by id
  */
 
-app.get("/api/contacts/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+app.get("/api/femicides/:id", function(req, res) {
+  db.collection(FEMICIDES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to get contact");
+      handleError(res, err.message, "Failed to get femicide");
     } else {
       res.status(200).json(doc);
     }
   });
 });
 
-app.put("/api/contacts/:id", function(req, res) {
+/*app.put("/api/contacts/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
@@ -107,4 +107,4 @@ app.delete("/api/contacts/:id", function(req, res) {
       res.status(200).json(req.params.id);
     }
   });
-});
+});*/
