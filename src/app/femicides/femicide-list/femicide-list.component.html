@@ -1,14 +1,32 @@
 <div class="row">
   <div class="col-md-5">
     <h2>Femicidios</h2>
-    <ul class="list-group">
+    <table class="table">
+    	<thead>
+	      <tr>
+	        <th>Nombre</th>
+	        <th>Fecha</th>
+	        <th>Lugar</th>
+	      </tr>
+    	</thead>
+	    <tbody>
+	    	<tr *ngFor="let femicide of femicides"
+        (click)="selectFemicide(femicide)"
+        [class.active]="femicide === selectedFemicide" >
+	    		<td>{{femicide.name}}</td>
+	    		<td>{{femicide.date}}</td>
+	    		<td>{{femicide.location}}</td>
+	    	</tr>
+	    </tbody>
+    </table>
+    <!-- <ul class="list-group">
       <li class="list-group-item"
         *ngFor="let femicide of femicides"
         (click)="selectFemicide(femicide)"
         [class.active]="femicide === selectedFemicide">
         {{femicide.name}}
       </li>
-    </ul>
+    </ul> -->
     <button class="btn btn-warning" (click)="createNewFemicide()">New</button>
   </div>
   <div class="col-md-5 col-md-offset-2">
